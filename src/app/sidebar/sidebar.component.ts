@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router, NavigationEnd, ActivatedRoute} from '@angular/router';
+import { filter, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,8 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+    currentUrl: string;
 
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+      router.events.subscribe(x => {
+        if(x instanceof NavigationEnd){
+            this.currentUrl = x.url;
+            console.log(x.url);
+        }
+
+
+      });
+
+
+  }
   ngOnInit() {
   }
 
